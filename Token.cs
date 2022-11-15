@@ -10,10 +10,7 @@ namespace Semantica
 
         public enum Tipos
         {
-            Identificador,Numero,Caracter,Asignacion,Inicializacion,
-            OperadorLogico,OperadorRelacional,OperadorTernario,
-            OperadorTermino,OperadorFactor,IncrementoTermino,IncrementoFactor,
-            FinSentencia,Cadena,TipoDato,Zona,Condicion,Ciclo
+            Identificador,Produccion
         }
 
         public void setContenido(string contenido)
