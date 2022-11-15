@@ -1,5 +1,5 @@
 //Gabriel Morales Nuñez
-using System;
+/*using System;
 using System.IO;
 using System.Collections.Generic;
 //Requerimiento 1.- Actualizacion:
@@ -29,14 +29,14 @@ using System.Collections.Generic;
 //                  a) Programar el while en ASM                                                   //Ya jala                   
 //                  b) Programar el do while en ASM                                                //Ya jala
 //
-namespace Semantica
+namespace GeneradorR
 {
-    public class Lenguaje : Sintaxis
+    public class Lenguaje
     {
-        List <Variable> variables = new List<Variable>();
+        //List <Variable> variables = new List<Variable>();
         Stack<float> stack = new Stack<float>();
 
-        Variable.TipoDato dominante;
+        //Variable.TipoDato dominante;
         int cIf;
         int cFor;
         public Lenguaje()
@@ -1233,4 +1233,4 @@ namespace Semantica
         
     }
     
-}
+}*/
