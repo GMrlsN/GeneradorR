@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Semantica
+namespace GeneradorR
 {
     public class Lexico : Token, IDisposable
     {
@@ -12,7 +12,15 @@ namespace Semantica
         const int E = -2;
         long contador = 0;
         protected int linea;
-        int[,] TRAND;
+        int[,] TRAND = new int[,]
+        {
+            {0,1,5,3,4,5},
+            {F,F,2,F,F,F},
+            {F,F,F,F,F,F},
+            {F,F,F,3,F,F},
+            {F,F,F,F,F,F},
+            {F,F,F,F,F,F}
+        };
         private bool disposedValue;
 
         protected void setLinea(int lin){
@@ -25,7 +33,7 @@ namespace Semantica
         {
             linea = 1;
             string path;
-            bool windows = true;
+            bool windows = false;
             if(windows)
             {
                 path = "C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.cpp";
@@ -96,108 +104,47 @@ namespace Semantica
         {
             switch(estado)
             {
+                case 1:
+                    setClasificacion(Tipos.ST);
+                    break;
+                case 2:
+                    setClasificacion(Tipos.Produce);
+                    break;
+                case 3:
+                    setClasificacion(Tipos.SNT);
+                    break;
+                case 4:
+                    setClasificacion(Tipos.FinProduccion);
+                    break;
+                case 5:
+                    setClasificacion(Tipos.ST);
+                    break;
+
             } 
         }
         private int columna(char c)
         {
-            //WS,EF,EL,L, D, .,	E, +, -, =,	:, ;, &, |,	!, >, <, *,	%, /, ", ?,La
-            if(FinArchivo())
+            if(c == 10)
             {
-                return 1;
-            }
-            else if(c == '\n')
-            {
-                return 2;
+                return 4;
             }
             else if(char.IsWhiteSpace(c))
             {
                 return 0;
             }
-            else if(char.ToUpper(c) == 'E')
+            else if(c == '-')
             {
-                return 6;
+                return 1;
+            }
+            else if(c == '>')
+            {
+                return 2;
             }
             else if(char.IsLetter(c))
             {
                 return 3;
             }
-            else if(char.IsDigit(c))
-            {
-                return 4;
-            }
-            else if(c == '.')
-            {
-                return 5;
-            }
-            else if(c == '+')
-            {
-                return 7;
-            }
-            else if(c == '-')
-            {
-                return 8;
-            }
-            else if(c == '=')
-            {
-                return 9;
-            }
-            else if(c == ':')
-            {
-                return 10;
-            }
-            else if(c == ';')
-            {
-                return 11;
-            }
-            else if(c == '&')
-            {
-                return 12;
-            }
-            else if(c == '|')
-            {
-                return 13;
-            }
-            else if(c == '!')
-            {
-                return 14;
-            }
-            else if(c == '>')
-            {
-                return 15;
-            }
-            else if(c == '<')
-            {
-                return 16;
-            }
-            else if(c == '*')
-            {
-                return 17;
-            }
-            else if(c == '%')
-            {
-                return 18;
-            }
-            else if(c == '/')
-            {
-                return 19;
-            }
-            else if(c == '"')
-            {
-                return 20;
-            }
-            else if(c == '?')
-            {
-                return 21;
-            }
-            else if(c == 39)
-            {
-                return 23;
-            }
-            else if(c == '#')
-            {
-                return 24;
-            }
-            return 22;
+            return 5;
         }
         //WS,EF,EL,L, D, .,	E, +, -, =,	:, ;, &, |,	!, >, <, *,	%, /, ", ?,La, ', #
         public void NextToken() 
@@ -254,7 +201,7 @@ namespace Semantica
             }
             else if (!FinArchivo())
             {
-                //log.WriteLine(getContenido() + " | " + getClasificacion());
+                log.WriteLine(getContenido() + " | " + getClasificacion());
             }
         }
         public long getContador(){

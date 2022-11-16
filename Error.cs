@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Semantica
+namespace GeneradorR
 {
     public class Error : Exception
     {

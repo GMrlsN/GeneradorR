@@ -6,7 +6,19 @@ namespace GeneradorR
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            try
+            {
+                using (Lenguaje a = new Lenguaje("c2.gram"))
+                {
+                    a.gramatica();
+                    //while(!a.FinArchivo()){
+                      //  a.NextToken();
+                    //}
+                }
+            }
+            catch{
+                //Console.WriteLine("Error");
+            }
         }
     }
 }

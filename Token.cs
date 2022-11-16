@@ -1,7 +1,7 @@
 //Gabriel Morales Nuñez
 using System;
 
-namespace Semantica
+namespace GeneradorR
 {
     public class Token
     {
@@ -10,7 +10,7 @@ namespace Semantica
 
         public enum Tipos
         {
-            Identificador,Produccion
+            Produce, SNT, ST, FinProduccion
         }
 
         public void setContenido(string contenido)
