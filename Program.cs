@@ -11,13 +11,11 @@ namespace GeneradorR
                 using (Lenguaje a = new Lenguaje("c2.gram"))
                 {
                     a.gramatica();
-                    //while(!a.FinArchivo()){
-                      //  a.NextToken();
-                    //}
+                    
                 }
             }
             catch{
-                //Console.WriteLine("Error");
+                //Console.WriteLine(e.Message);
             }
         }
     }

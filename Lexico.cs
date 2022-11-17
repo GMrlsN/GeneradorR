@@ -8,6 +8,8 @@ namespace GeneradorR
     {
         protected StreamReader archivo;
         protected StreamWriter log;
+        protected StreamWriter lenguaje;
+        protected StreamWriter programa;
         const int F = -1;
         const int E = -2;
         long contador = 0;
@@ -39,12 +41,14 @@ namespace GeneradorR
                 path = "C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.cpp";
                 ////asm = new StreamWriter("C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.//asm");
                 log = new StreamWriter("C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.Log");
+                lenguaje = new StreamWriter("C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\Generador\\c2.Log");
             }
             else
             {
-                path = "/workspace/Semantica/prueba.cpp";
-                log = new StreamWriter("/workspace/Semantica/prueba.Log");
+                path = "/workspace/GeneradorR/prueba.cpp";
+                log = new StreamWriter("/workspace/GeneradorR/prueba.Log");
                 ////asm = new StreamWriter("/workspace/Semantica/prueba.//asm");
+                lenguaje = new StreamWriter("/workspace/GeneradorR/generador/prueba.cpp");
 
             }
             //string path = "C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.cpp";
@@ -52,7 +56,7 @@ namespace GeneradorR
             //log = new StreamWriter("C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.Log");
             log.AutoFlush = true;
             ////asm = new StreamWriter("C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.//asm");
-            ////asm.AutoFlush = true;
+            lenguaje.AutoFlush = true;
             //log.WriteLine("Primer constructor");
             log.WriteLine("Archivo: prueba.cpp");
             log.WriteLine(DateTime.Now);
@@ -75,9 +79,9 @@ namespace GeneradorR
             string pathLog = Path.ChangeExtension(nombre, ".log");
             log = new StreamWriter(pathLog); 
             log.AutoFlush = true;
-            //string path//asm = Path.ChangeExtension(nombre, ".//asm");
-            //asm = new StreamWriter(path//asm);
-            ////asm.AutoFlush = true;
+            string pathLenguaje = Path.ChangeExtension(nombre, ".cs");
+            lenguaje = new StreamWriter(pathLenguaje);
+            lenguaje.AutoFlush = true;
             //log.WriteLine("Segundo constructor");
             log.WriteLine("Archivo: "+nombre);
             log.WriteLine("fecha: "+ DateTime.Now);
