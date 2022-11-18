@@ -48,7 +48,7 @@ namespace GeneradorR
                 path = "/workspace/GeneradorR/prueba.cpp";
                 log = new StreamWriter("/workspace/GeneradorR/prueba.Log");
                 ////asm = new StreamWriter("/workspace/Semantica/prueba.//asm");
-                lenguaje = new StreamWriter("/workspace/GeneradorR/generador/prueba.cpp");
+                lenguaje = new StreamWriter("/workspace/GeneradorR/Generico/c2.gra");
 
             }
             //string path = "C:\\Users\\gabri\\OneDrive\\Documents\\ITQ\\Materias\\Lenguajes y Automatas II\\Semantica\\prueba.cpp";
@@ -79,7 +79,7 @@ namespace GeneradorR
             string pathLog = Path.ChangeExtension(nombre, ".log");
             log = new StreamWriter(pathLog); 
             log.AutoFlush = true;
-            string pathLenguaje = Path.ChangeExtension(nombre, ".cs");
+            string pathLenguaje = Path.ChangeExtension(nombre, ".gra");
             lenguaje = new StreamWriter(pathLenguaje);
             lenguaje.AutoFlush = true;
             //log.WriteLine("Segundo constructor");
@@ -234,14 +234,6 @@ namespace GeneradorR
                 disposedValue = true;
             }
         }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~Lexico()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method

@@ -11,7 +11,6 @@ namespace GeneradorR
                 using (Lenguaje a = new Lenguaje("c2.gram"))
                 {
                     a.gramatica();
-                    
                 }
             }
             catch{

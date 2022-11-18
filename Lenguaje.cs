@@ -1,35 +1,36 @@
 //Gabriel Morales Nuñez
 using System;
 using System.Collections.Generic;
-//Requerimiento 1. Construir un metodo para escribir en el archivo Lenguaje.cs identando el codigo
+//Requerimiento 1.-Construir un metodo para escribir en el archivo Lenguaje.cs identando el codigo
 //                 "{" incrementa un tabulador, "}" decrementa un tabulador
-//Requerimiento 2. Declarar un atributo "primeraProduccion" de tipo string y actualizarlo con la 
+//Requerimiento 2.-Declarar un atributo "primeraProduccion" de tipo string y actualizarlo con la 
 //                 primera produccion de la gramatica
-//Requerimiento 3. La primera produccion es publica y el resto es privada
+//Requerimiento 3.-La primera produccion es publica y el resto es privada
+//Requerimiento 4.-El costructor lexico parametrizado debe validar que la extension del archivo 
+//                 a compilar sea .gen
+//                 si no es .gen debe lanzar una excepcion
+//Requerimiento 5.-Resolver la ambiguedad de ST y SNT
 namespace GeneradorR
 {
     public class Lenguaje : Sintaxis//, IDisposable
     {
-        string nombreProyecto;
         public Lenguaje(string nombre) : base(nombre)
         {
-            nombreProyecto = "";
         }
         public Lenguaje()
         {
-            nombreProyecto = "";
         }
         public void Dispose()
         {
             cerrar();
         }
-        private void Programa(string espacioProyecto, string produccionPrincipal)
+        private void Programa( string produccionPrincipal)
         {
             programa.WriteLine("using System;");
             programa.WriteLine("using System.IO;");
             programa.WriteLine("using System.Collections.Generic;");
             programa.WriteLine();
-            programa.WriteLine("namespace " + espacioProyecto);
+            programa.WriteLine("namespace Generico");
             programa.WriteLine("{");
             programa.WriteLine("\tpublic class Program");
             programa.WriteLine("\t{");
@@ -53,8 +54,8 @@ namespace GeneradorR
         public void gramatica()
         {
             cabecera();
-            Programa(nombreProyecto, "programa");
-            cabeceraLenguaje(nombreProyecto);
+            Programa("programa");
+            cabeceraLenguaje();
             listaProducciones();
             lenguaje.WriteLine("\t}");
             lenguaje.WriteLine("}");
@@ -63,19 +64,17 @@ namespace GeneradorR
         {
             match("Gramatica");
             match(":");
-            nombreProyecto = getContenido();
             match(Tipos.SNT);
             match(Tipos.FinProduccion);
         }
-        private void cabeceraLenguaje(string espacioProyecto)
+        private void cabeceraLenguaje()
         {
             lenguaje.WriteLine("using System;");
             lenguaje.WriteLine("using System.Collections.Generic;");
-            lenguaje.WriteLine("namespace "+espacioProyecto);
+            lenguaje.WriteLine("namespace Generico");
             lenguaje.WriteLine("{");
             lenguaje.WriteLine("\tpublic class Lenguaje : Sintaxis, IDisposable");
             lenguaje.WriteLine("\t{");
-            lenguaje.WriteLine("\t\tstring nombreProyecto;");
             lenguaje.WriteLine("\t\tpublic Lenguaje(string nombre) : base(nombre)");
             lenguaje.WriteLine("\t\t{");
             lenguaje.WriteLine("\t\t}");
@@ -94,6 +93,7 @@ namespace GeneradorR
             lenguaje.WriteLine("\t\t{");
             match(Tipos.SNT);
             match(Tipos.Produce);
+            simbolos();
             match(Tipos.FinProduccion);
             lenguaje.WriteLine("\t\t}");
             if (!FinArchivo())
@@ -101,6 +101,50 @@ namespace GeneradorR
                 listaProducciones();
             }
 
+        }
+        private void simbolos()
+        {
+            if(esTipo(getContenido()))
+            {
+                lenguaje.WriteLine("\t\t\t\tmatch(Tipos." + getContenido() + ");");
+                match(Tipos.SNT);
+            }
+            else if(getClasificacion() == Tipos.ST)
+            {
+                lenguaje.WriteLine("\t\t\t\tmatch(\"" + getContenido() + "\");");
+                match(Tipos.ST);
+            }
+            else{
+                throw new Exception("Error de sintaxis");
+            }
+
+            if(getClasificacion() != Tipos.FinProduccion)
+            {
+                simbolos();
+            }
+        }
+        private bool esTipo(string clasificacion)
+        {
+            switch (clasificacion)
+            {
+                case "Identificador":
+                case "Numero":
+                case "Caracter":
+                case "Asignacion":
+                case "Inicializacion":
+                case "OperadorLogico":
+                case "OperadorRelacional":
+                case "Operador ternario":
+                case "OperadorTermino":
+                case "OperadorFactor":
+                case "IncrementoTermino":
+                //etc ...
+                return true;
+
+            }
+            return false;
+
+            //Identificador, Numero, etc ... 
         }
     }
 }
